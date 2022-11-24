@@ -1,6 +1,11 @@
+import { liveQuery } from "dexie";
+import { useLiveQuery } from "dexie-react-hooks";
 import React, { useState} from "react";
+import { db } from "../../db";
 import Cookie from './Cookie.png';
 import Monster from './Cookie_Monster.webp';
+
+
 
 
 function Login() {
@@ -18,6 +23,37 @@ function Login() {
             [e.target.name]: value
         });
     }
+
+    function loginAuth() {
+
+        // if(user.Username.replace(/\s/g, '') === ""){
+        //     alert("Please fill in the login fields.")
+        // }
+
+        // const userLogin = useLiveQuery(
+        //     () => db.user
+        //         .where('username').equals(user.Username).first()
+        // )
+
+        try {
+
+            const userLogin = useLiveQuery(
+                async () => {
+        
+                    const retrieveUser = await db.user
+                        .where("user").equals(user.Username)
+                    
+                    return retrieveUser
+                    }
+            )
+        } catch(err) {
+
+            alert('Did not retrieve')
+        }
+
+        alert('Hello')
+    }
+
 
     // function login(){
     //     if(user.Username.replace(/\s/g, '') === ""){
@@ -40,6 +76,48 @@ function Login() {
     //         )
     //     }
     // }
+
+
+    /* Use for signup functionality? */
+    // export function UserSignUp () {
+        
+    //     const [name, setName] = useState("");
+    //     const [age, setAge] = useState("");
+    //     const [salt, setSalt] = useState("");
+
+    //     var Crypto = require('crypto');
+    //     //var mongoose = require('mongoose');
+
+    //     // Crypto.randomBytes('256', function(err, buf){
+    //     //     if (err) throw err;
+    //     //     return buf;
+    //     // });
+
+    //     var buf = crypto.randomBytes(16).toString('base64');
+    // }
+
+
+
+    // export function RetrieveUserLogin({userName, password}) {
+
+    //     if(userName === )
+
+      
+    //     async function getUser() {
+    //         const user = liveQuery(
+    //             () => db.user
+
+    //         )
+    //       try {
+            
+    //         // Get a 
+    //       }
+      
+    //     }
+      
+    //   }
+
+
 
     return (
         <div className='bg-cookie-white'>
@@ -67,7 +145,7 @@ function Login() {
                             </div>
                             
                             <div className='pt-20'>
-                                <button type='button' className='text-white bg-cookie-brown font-medium rounded-md text-2xl w-full p-3 mt-5 text-cookie-dull'>Login</button>
+                                <button type='button' className='text-white bg-cookie-brown font-medium rounded-md text-2xl w-full p-3 mt-5 text-cookie-dull' onClick={loginAuth}>Login</button> 
                             </div>
                         </div>
                     </div>
