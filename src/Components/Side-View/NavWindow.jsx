@@ -10,18 +10,18 @@ function NavWindow({ setCol, setActiveAdd }) {
     );
 
     return (
-        <div className='flex flex-col w-full hidden 2xl:block'>
-            <div className='flex flex-row w-full h-[10%] items-center justify-center'>
-                <div className='flex flex-col text-2xl font-black text-cookie-hazel 2xl:text-3xl select-none'>
+        <div className='flex flex-col w-full hidden lg:flex md:flex pt-6'>
+            <div className='flex flex-row w-full h-[10%] items-center justify-center pl-4'>
+                <div className='flex flex-col text-2xl font-black text-cookie-hazel lg:text-3xl select-none mt-5'>
                     <p>Cookie </p>
                     <p>Decrumbler</p>
                 </div>
-                <img src={logo} className="w-1/4 ml-5 hidden 2xl:block"></img>
+                <img src={logo} className="w-1/3 hidden lg:block pr-5 pb-5 mt-5"></img>
             </div>
-            <div className='w-full bg-cookie-brown hover:bg-cookie-hazel select-none cursor-pointer'>
-                <h1 className='p-2 font-light text-cookie-white ' onClick={() => {setCol(undefined); setActiveAdd(false)}} >View Fields</h1>
+            <div className='w-full bg-cookie-brown hover:bg-cookie-hazel select-none cursor-pointer mt-10 h-8'>
+                <h1 className='text-center font-light text-cookie-white pt-1' onClick={() => {setCol(undefined); setActiveAdd(false)}} >View Subnets</h1>
             </div>
-            <div className='h-[70vh] overflow-hidden'>
+            <div className='h-[65%] overflow-hidden'>
                 {
                 collections?.map(
                     function (res) {
@@ -42,7 +42,7 @@ function NavWindow({ setCol, setActiveAdd }) {
                     <p className='group-hover:text-cookie-hazel text-cookie-brown'>Add Subnet</p>
                 </div>
                 <div className='p-3'/>
-                <button type='button' className='text-white bg-cookie-brown font-medium rounded-md text-2xl w-8/12 p-1 text-cookie-dull'>Logout</button>
+                <button type='button' className='text-white bg-cookie-brown font-medium text-2xl w-full text-center text-cookie-dull h-10 hover:bg-cookie-hazel'>Logout</button>
             </div>
 
             
