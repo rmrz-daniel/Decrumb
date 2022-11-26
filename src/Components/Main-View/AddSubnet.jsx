@@ -17,11 +17,32 @@ function AddSubnet() {
         const { value } = e.target;
         setNewSubnet({
             ...newSubnet,
-            [e.target.name]: value
+            [e.target.name]: value,
+            [e.target.collection]: value,
+            [e.target.subnet]: value,
+            [e.target.vlan]: value,
+            [e.target.gw]: value,
+            [e.target.location]: value,
+            [e.target.state]: value,
         });
     }
 
+    async function updateSubnets(){
+        try {
+            await db.subnet.add({
+                name,
+                collection,
+                subnet,
+                vlan,
+                gw,
+                location,
+                state
+            });
+            
+        }catch (error){
 
+        }
+    }
 
     // async function addFriend() {
     //     try {
@@ -53,28 +74,28 @@ function AddSubnet() {
 
                         <div className="flex flex-col w-2/6">
                             <label className='pl-1 text-lg text-cookie-hazel font-semibold'>Name</label>
-                            <input type='password' className='px-4 py-3 mt-2 rounded-sm border-2 bg-cookie-dull/20 border-cookie-hazel hover:bg-cookie-white focus:border-cookie-brown/50 focus:bg-cookie-white focus:outline-none'
+                            <input type='text' className='px-4 py-3 mt-2 rounded-sm border-2 bg-cookie-dull/20 border-cookie-hazel hover:bg-cookie-white focus:border-cookie-brown/50 focus:bg-cookie-white focus:outline-none'
                             value={newSubnet.name} onChange={handleChange} name='name'/>
                         </div>
                         <div className="flex flex-col w-[15%]">
                             <label className='pl-1 text-lg text-cookie-hazel font-semibold'>Subnet</label>
-                            <input type='password' className='px-4 py-3 mt-2  rounded-sm border-2 bg-cookie-dull/20 border-cookie-hazel hover:bg-cookie-white focus:border-cookie-brown/50 focus:bg-cookie-white focus:outline-none'
-                            value={newSubnet.name} onChange={handleChange} name='name'/>
+                            <input type='text' className='px-4 py-3 mt-2  rounded-sm border-2 bg-cookie-dull/20 border-cookie-hazel hover:bg-cookie-white focus:border-cookie-brown/50 focus:bg-cookie-white focus:outline-none'
+                            value={newSubnet.subnet} onChange={handleChange} name='subnet'/>
                         </div>
                         <div className="flex flex-col w-[7%]">
                             <label className='pl-1 text-lg text-cookie-hazel font-semibold'>VLAN</label>
-                            <input type='password' className='px-4 py-3 mt-2  rounded-sm border-2 bg-cookie-dull/20 border-cookie-hazel hover:bg-cookie-white focus:border-cookie-brown/50 focus:bg-cookie-white focus:outline-none'
-                            value={newSubnet.name} onChange={handleChange} name='name'/>
+                            <input type='text' className='px-4 py-3 mt-2  rounded-sm border-2 bg-cookie-dull/20 border-cookie-hazel hover:bg-cookie-white focus:border-cookie-brown/50 focus:bg-cookie-white focus:outline-none'
+                            value={newSubnet.vlan} onChange={handleChange} name='vlan'/>
                         </div>
                         <div className="flex flex-col w-[12%]">
                             <label className='pl-1 text-lg text-cookie-hazel font-semibold'>Gateway</label>
-                            <input type='password' className='px-4 py-3 mt-2  rounded-sm border-2 bg-cookie-dull/20 border-cookie-hazel hover:bg-cookie-white focus:border-cookie-brown/50 focus:bg-cookie-white focus:outline-none'
-                            value={newSubnet.name} onChange={handleChange} name='name'/>
+                            <input type='text' className='px-4 py-3 mt-2  rounded-sm border-2 bg-cookie-dull/20 border-cookie-hazel hover:bg-cookie-white focus:border-cookie-brown/50 focus:bg-cookie-white focus:outline-none'
+                            value={newSubnet.gw} onChange={handleChange} name='gw'/>
                         </div>
                         <div className="flex flex-col w-[7%]">
                             <label className='pl-1 text-lg text-cookie-hazel font-semibold'>Status?</label>
-                            <input type='password' className='px-4 py-3 mt-2  rounded-sm border-2 bg-cookie-dull/20 border-cookie-hazel hover:bg-cookie-white focus:border-cookie-brown/50 focus:bg-cookie-white focus:outline-none'
-                            value={newSubnet.name} onChange={handleChange} name='name'/>
+                            <input type='text' className='px-4 py-3 mt-2  rounded-sm border-2 bg-cookie-dull/20 border-cookie-hazel hover:bg-cookie-white focus:border-cookie-brown/50 focus:bg-cookie-white focus:outline-none'
+                            value={newSubnet.status} onChange={handleChange} name='status'/>
                         </div>
                                         
                     </div>
@@ -84,24 +105,24 @@ function AddSubnet() {
 
                         <div className="flex flex-col w-[10%]">
                             <label className='pl-1 text-lg text-cookie-hazel font-semibold'>Fields</label>
-                            <input type='password' className='px-4 py-3 mt-2 rounded-sm border-2 bg-cookie-dull/20 border-cookie-hazel hover:bg-cookie-white focus:border-cookie-brown/50 focus:bg-cookie-white focus:outline-none'
-                            value={newSubnet.name} onChange={handleChange} name='name'/>
+                            <input type='text' className='px-4 py-3 mt-2 rounded-sm border-2 bg-cookie-dull/20 border-cookie-hazel hover:bg-cookie-white focus:border-cookie-brown/50 focus:bg-cookie-white focus:outline-none'
+                            value={newSubnet.collection} onChange={handleChange} name='collection'/>
                         </div>
                         <div className="flex flex-col w-[10%]">
                             <label className='pl-1 text-lg text-cookie-hazel font-semibold'>VRF</label>
-                            <input type='password' className='px-4 py-3 mt-2  rounded-sm border-2 bg-cookie-dull/20 border-cookie-hazel hover:bg-cookie-white focus:border-cookie-brown/50 focus:bg-cookie-white focus:outline-none'
-                            value={newSubnet.name} onChange={handleChange} name='name'/>
+                            <input type='text' className='px-4 py-3 mt-2  rounded-sm border-2 bg-cookie-dull/20 border-cookie-hazel hover:bg-cookie-white focus:border-cookie-brown/50 focus:bg-cookie-white focus:outline-none'
+                            value={newSubnet.vrf} onChange={handleChange} name='vrf'/>
                         </div>
                         <div className="flex flex-col w-1/6">
                             <label className='pl-1 text-lg text-cookie-hazel font-semibold'>Location</label>
-                            <input type='password' className='px-4 py-3 mt-2  rounded-sm border-2 bg-cookie-dull/20 border-cookie-hazel hover:bg-cookie-white focus:border-cookie-brown/50 focus:bg-cookie-white focus:outline-none'
-                            value={newSubnet.name} onChange={handleChange} name='name'/>
+                            <input type='text' className='px-4 py-3 mt-2  rounded-sm border-2 bg-cookie-dull/20 border-cookie-hazel hover:bg-cookie-white focus:border-cookie-brown/50 focus:bg-cookie-white focus:outline-none'
+                            value={newSubnet.location} onChange={handleChange} name='location'/>
                         </div>
                         <div className="w-[41%]"/>
                                         
                     </div>
                     <div className="flex flex-row mt-4 justify-end">
-                        <button type='button' className='text-white bg-cookie-brown font-normal rounded-md text-sm w-[10%] p-3 mt-5 text-cookie-white hover:bg-cookie-hazel'>Save Subnet</button>
+                        <button onClick={updateSubnets} type='button' className='text-white bg-cookie-brown font-normal rounded-md text-sm w-[10%] p-3 mt-5 text-cookie-white hover:bg-cookie-hazel'>Save Subnet</button>
                     </div>
 
                 </div>
