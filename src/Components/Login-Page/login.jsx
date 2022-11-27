@@ -4,7 +4,7 @@ import React, { useState} from "react";
 import { db } from "../../db";
 import Cookie from './Cookie.png';
 import Monster from './Cookie_Monster.webp';
-import { db } from "../../db";
+
 
 const initialState = {
     Username: '',
