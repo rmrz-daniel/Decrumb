@@ -4,17 +4,21 @@ import React, { useState} from "react";
 import { db } from "../../db";
 import Cookie from './Cookie.png';
 import Monster from './Cookie_Monster.webp';
+import { db } from "../../db";
 
+const initialState = {
+    Username: '',
+    Password: ''
+  };
 
 
 
 function Login() {
+
+    const [signup, setActive] = useState(false);
+    const [success, setSuccess] = useState(false);
     
-    const [user, setUser] = useState({
-        Salt: '',
-        Username: '',
-        Password: ''
-    });
+    const [user, setUser] = useState(initialState);
 
     function handleChange(e) {
         const { value } = e.target;
@@ -22,38 +26,20 @@ function Login() {
             ...user,
             [e.target.name]: value
         });
+    };
+
+    async function handleSignup() {
+        const salt = Math.floor(100000 + Math.random() * 900000);
+        await db.user.add({
+            username: user.Username,
+            password: user.Password + salt,
+            salt: salt.toString()
+            });
+        setUser(initialState);
+        setSuccess(success => !success);
+        setActive(signup => !signup);
+
     }
-
-    function loginAuth() {
-
-        // if(user.Username.replace(/\s/g, '') === ""){
-        //     alert("Please fill in the login fields.")
-        // }
-
-        // const userLogin = useLiveQuery(
-        //     () => db.user
-        //         .where('username').equals(user.Username).first()
-        // )
-
-        try {
-
-            const userLogin = useLiveQuery(
-                async () => {
-        
-                    const retrieveUser = await db.user
-                        .where("user").equals(user.Username)
-                    
-                    return retrieveUser
-                    }
-            )
-        } catch(err) {
-
-            alert('Did not retrieve')
-        }
-
-        alert('Hello')
-    }
-
 
     // function login(){
     //     if(user.Username.replace(/\s/g, '') === ""){
@@ -77,52 +63,52 @@ function Login() {
     //     }
     // }
 
-
-    /* Use for signup functionality? */
-    // export function UserSignUp () {
-        
-    //     const [name, setName] = useState("");
-    //     const [age, setAge] = useState("");
-    //     const [salt, setSalt] = useState("");
-
-    //     var Crypto = require('crypto');
-    //     //var mongoose = require('mongoose');
-
-    //     // Crypto.randomBytes('256', function(err, buf){
-    //     //     if (err) throw err;
-    //     //     return buf;
-    //     // });
-
-    //     var buf = crypto.randomBytes(16).toString('base64');
-    // }
-
-
-
-    // export function RetrieveUserLogin({userName, password}) {
-
-    //     if(userName === )
-
-      
-    //     async function getUser() {
-    //         const user = liveQuery(
-    //             () => db.user
-
-    //         )
-    //       try {
-            
-    //         // Get a 
-    //       }
-      
-    //     }
-      
-    //   }
-
-
-
     return (
+        
         <div className='bg-cookie-white'>
+            {
+            success && <div class="absolute top-0 w-full z-10 bg-green-100 rounded-lg py-5 px-6 text-green-700 text-center">
+            Signup was successfull <span className="absolute left-[98%] select-none cursor-pointer text-green-800" onClick={() => {setSuccess(success => !success)}}>X</span>
+            </div>
+            }
+
             <div className='flex flex-col md:flex-row h-screen items-center'>
                 <div className='flex items-center justify-center w-full md:w-1/2 xl:w-1/3 md:mx-auto px-6 lg:px-16 xl:px-12'>
+                {
+                    signup
+                    ?
+                    // If the signup is true then this is displayed
+                    <div className='w-4/5 h-100'>
+                        <div className='font-bold text-4xl text-black '>Sign Up to your
+                            <div className='inline-block pl-4 text-cookie-hazel text-left'>
+                                <h1>Cookie</h1>
+                                <h1>Decrumbler</h1>
+                            </div>
+                        </div>
+                        <h2 className='mt-6 font-medium text-lg'>Something inspirational inserted here to motivate you to work!</h2>
+                        <div className='mt-10'>
+                            <div>
+                                <label className='block pl-1 text-xl'>Username</label>
+                                <input type='text' className='px-4 py-3 mt-2 w-full rounded-sm border-2 bg-cookie-dull/20 border-cookie-brown hover:bg-cookie-white hover:border-cookie-hazel bg-cookie-white focus:border-cookie-hazel focus:bg-cookie-white focus:outline-none'
+                                value={user.Username} onChange={handleChange} name='Username'/>
+                            </div>
+
+                            <div className='mt-4'>
+                                <label className='block pl-1 text-xl'>Password</label>
+                                <input type='password' className='px-4 py-3 mt-2 w-full rounded-sm border-2 bg-cookie-dull/20 border-cookie-brown hover:bg-cookie-white hover:border-cookie-hazel bg-cookie-white focus:border-cookie-hazel focus:bg-cookie-white focus:outline-none.'
+                                value={user.Password} onChange={handleChange} name='Password'/>
+                            </div>
+                            <div className="pt-3"/>
+                            <h1 className="font-semibold text-lg text-right">Returning user? <span className="text-cookie-hazel select-none cursor-pointer hover:text-cookie-hazel/70"
+                            onClick={() => {setActive(signup => !signup)}}>Login.</span></h1>
+                            <div className='pt-16'>
+                                <button type='button' className='text-white bg-cookie-brown font-medium rounded-md text-2xl w-full p-3 mt-5 text-cookie-dull'
+                                onClick={handleSignup}>Signup</button>
+                            </div>
+                        </div>
+                    </div>
+                    :
+                    // this will display by default as signup is defaulted to false
                     <div className='w-4/5 h-100'>
                         <div className='font-bold text-4xl text-black '>Welcome to your
                             <div className='inline-block pl-4 text-cookie-hazel text-left'>
@@ -145,10 +131,12 @@ function Login() {
                             </div>
                             
                             <div className='pt-20'>
-                                <button type='button' className='text-white bg-cookie-brown font-medium rounded-md text-2xl w-full p-3 mt-5 text-cookie-dull' onClick={loginAuth}>Login</button> 
+                                <button type='button' className='text-white bg-cookie-brown font-medium rounded-md text-2xl w-full p-3 mt-5 text-cookie-dull'>Login</button>
                             </div>
                         </div>
                     </div>
+                }
+                    
                     
                 </div>
                 <div className='flex items-center justify-center h-[95%] hidden bg-cookie-dull/20 w-1/2 lg:block xl:w-2/3 m-10 rounded-3xl p-20 bg-blob bg-cover overflow-hidden relative'>

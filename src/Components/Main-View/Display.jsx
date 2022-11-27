@@ -12,11 +12,11 @@ function Display() {
     return (
         <div className='bg-cookie-white'>
             <div className='flex flex-row h-screen '>
-                <div className='flex w-15 sm:w-16 2xl:w-1/6'>
+                <div className='flex lg:w-[20%] md:w-[25%]'>
                     <NavWindow setCol = {setCol} setActiveAdd = {setActiveAdd}/>
                 </div>
                 <div className="w-[1px] h-screen bg-cookie-brown"></div>
-                <div className='flex flex-col items-center h-screen  w-full '>
+                <div className='flex flex-col items-center h-screen w-full'>
                     {
                     add !== true 
                     ?
