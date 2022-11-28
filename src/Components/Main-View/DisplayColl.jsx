@@ -66,10 +66,10 @@ function DisplayColl({col, setCol}) {
                 <p className="px-5">{col}</p>
             </div>
             <div className="flex mt-10 flex-col h-[95%] w-[90%] border rounded-t-lg border-cookie-brown shrink-0">
-                <div className="flex flex-row pt-10 select-none ml-[5%] lg:flex md:flex w-[100%] shrink-0">
-                    {view ? <div className="py-3 my-5 lg:w-[5%] hidden md:block shrink-0">Sort By</div> : <div className="py-3 my-5 lg:w-[5%] hidden md:block shrink-0">Field</div>}
+                <div className="flex flex-row pt-10 select-none ml-[5%] lg:flex md:flex w-[90%] shrink-0">
+                    {view ? <div className="py-3 my-5 lg:w-[10%] text-right pr-3 hidden md:block shrink-0">Sort By</div> : <div className="py-3 my-5 lg:w-[5%] hidden md:block shrink-0">Field</div>}
 
-                    <select placeholder="Search and Filter" onChange={!view ? e => handle(e) : console.log("not in map view")} className='cursor-pointer hidden md:block px-4 py-3 my-5 lg:w-[20%] md:w-[25%] rounded-md bg-cookie-dull/20 focus:outline-none shrink-0'>
+                    <select placeholder="Search and Filter" onChange={!view ? e => handle(e) : console.log("not in map view")} className='cursor-pointer hidden md:block px-4 py-3 my-5 lg:w-13 md:w-[25%] h-12 rounded-md bg-cookie-dull/20 focus:outline-none shrink-0'>
                         {view
                             ?
                             <>
@@ -89,7 +89,7 @@ function DisplayColl({col, setCol}) {
                         }
 
                     </select>
-                    <div className='flex flex-row shrink-0 grow-0 p-1 m-5 w-[7%] shrink-0 rounded-md bg-cookie-brown/20 cursor-pointer' onClick={() => { setView(current => !current); console.log(view) }}>
+                    <div className='flex flex-row shrink-0 grow-0 p-1 m-5 w-[7%] h-12 shrink-0 rounded-md bg-cookie-brown/20 cursor-pointer' onClick={() => { setView(current => !current); console.log(view) }}>
                         <div className={'w-1/2 rounded-md p-1' + (view ? ' bg-cookie-hazel/80 ' : ' bg-transparent')}>
                             <img src={HamBurger} className='select-none' />
                         </div>
@@ -97,8 +97,8 @@ function DisplayColl({col, setCol}) {
                             <img src={Map} className='select-none' />
                         </div>
                     </div>
-                    <div className="flex flex-row lg:w-[65%] shrink-0">
-                        <button type='button' className='hidden md:block bg-cookie-brown text-cookie-white hover:bg-cookie-hazel font-medium rounded-md lg:w-[20%] py-3 my-5'>Export</button>
+                    <div className="flex flex-row lg:w-[40%] shrink-0">
+                        <button type='button' className='hidden md:block bg-cookie-brown text-cookie-white hover:bg-cookie-hazel font-medium rounded-md lg:w-13 md:w-20 lg:pr-5 lg:pl-5 my-5'>Export</button>
                     </div>
                 </div>
 
