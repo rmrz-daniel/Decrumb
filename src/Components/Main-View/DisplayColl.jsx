@@ -62,9 +62,6 @@ function DisplayColl({col, setCol}) {
 
     return (
         <>
-            <div className="flex flex-row w-full bg-cookie-brown text-cookie-white h-10 items-center ">
-                <p className="p-5">Subnets</p>
-            </div>
             <div className="flex mt-10 flex-col h-[95%] w-[90%] border rounded-t-lg border-cookie-brown shrink-0 items-center">
                 <div className="flex flex-row pt-10 select-none lg:flex md:flex w-full shrink-0 justify-start">
                     {view ? <div className="py-3 my-5 lg:w-[10%] text-right pr-3 hidden md:block shrink-0">Sort By</div> : <div className="py-3 pr-3 my-5 lg:w-[10%] text-right hidden md:block shrink-0">Field</div>}
