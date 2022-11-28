@@ -4,6 +4,7 @@ import React, { useState} from "react";
 import { db } from "../../db";
 import Cookie from './Cookie.png';
 import Monster from './Cookie_Monster.webp';
+import { characterPass } from "./secureLogin";
 
 
 const initialState = {
@@ -15,7 +16,7 @@ const initialState = {
 
 function Login() {
 
-    const [signup, setActive] = useState(false);
+    const [signup, setActive] = useState(true);
     const [success, setSuccess] = useState(false);
     
     const [user, setUser] = useState(initialState);
@@ -29,8 +30,22 @@ function Login() {
     };
 
     async function handleSignup() {
+
+        //Security against JSON attack
+        try {
+            
+            const userQuery = await db.useraccount.where("username").equalsIgnoreCase(user.Username).first();
+            if(userQuery === null || userQuery === undefined || characterPass(userQuery)) { 
+            
+                alert('Try another username')
+                throw "exit";
+            }
+        } catch (e) {
+        }
+        
+        //Salting to implement with Hashing
         const salt = Math.floor(100000 + Math.random() * 900000);
-        await db.user.add({
+        await db.useraccount.add({
             username: user.Username,
             password: user.Password + salt,
             salt: salt.toString()
@@ -40,6 +55,45 @@ function Login() {
         setActive(signup => !signup);
 
     }
+
+
+
+    async function checkLogin() {
+
+        alert('hello')
+        alert(user.Username)
+
+       // user.Username.replace(/\s/g, function (x) {return alert("Alert!")});
+
+        const userQuery = await db.useraccount.where("username").equalsIgnoreCase(user.Username).first();
+
+
+        alert('bye')
+
+
+
+        // useLiveQuery(
+
+        //     async () => {
+                
+        //         const userQuery = await db.user
+        //             .where({
+        //                 username: user.Username,
+        //                 password: user.Password
+        //             }).first()
+        //     }
+        // )
+
+        // try {
+        //     await db.friends.add({name: "Josephine", age: 21});
+        //     const youngFriends = await db.friends.where("age").below(25).toArray();
+        //     alert (`My young friends: ${JSON.stringify(youngFriends)}`);
+        //   } catch (e) {
+        //     alert (`Error: ${e}`);
+        //   }
+        
+    }
+
 
     // function login(){
     //     if(user.Username.replace(/\s/g, '') === ""){
@@ -108,7 +162,7 @@ function Login() {
                         </div>
                     </div>
                     :
-                    // this will display by default as signup is defaulted to false
+                    // this will display by default as signup is defaulted to false //JO sets it to true first
                     <div className='w-4/5 h-100'>
                         <div className='font-bold text-4xl text-black '>Welcome to your
                             <div className='inline-block pl-4 text-cookie-hazel text-left'>
@@ -131,7 +185,7 @@ function Login() {
                             </div>
                             
                             <div className='pt-20'>
-                                <button type='button' className='text-white bg-cookie-brown font-medium rounded-md text-2xl w-full p-3 mt-5 text-cookie-dull'>Login</button>
+                                <button type='button' className='text-white bg-cookie-brown font-medium rounded-md text-2xl w-full p-3 mt-5 text-cookie-dull' onClick={checkLogin}>Login</button>
                             </div>
                         </div>
                     </div>
