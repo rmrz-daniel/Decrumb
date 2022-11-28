@@ -4,7 +4,7 @@ import Cookie from './Cookie.png';
 import Monster from './Cookie_Monster.webp';
 
 
-function Login() {
+function SignUp() {
     
     const [user, setUser] = useState({
         Salt: '',
@@ -19,28 +19,6 @@ function Login() {
             [e.target.name]: value
         });
     }
-
-    // function login(){
-    //     if(user.Username.replace(/\s/g, '') === ""){
-    //         return (
-    //             alert("Alert!")
-    //         );
-    //     }else{
-    //         axios.get(`http://localhost:4444/api/get-user/${user.Username}`).then(
-    //             function({data}){
-    //                 if(data.Password === user.Password){
-    //                     console.log("Match")
-    //                 } else {
-    //                     console.log("NO MATCH")
-    //                 }
-    //             }
-    //         ).catch(
-    //             function(error){
-    //                 console.log(error)
-    //             }
-    //         )
-    //     }
-    // }
 
     return (
         <div className='bg-cookie-white'>
@@ -61,22 +39,24 @@ function Login() {
                                 value={user.Username} onChange={handleChange} name='Username'/>
                             </div>
 
-                            <div className='mt-4 mb-5'>
+                            <div className='mt-4'>
                                 <label className='block pl-1 text-xl'>Password</label>
                                 <input type='password' className='px-4 py-3 mt-2 w-full rounded-sm border-2 bg-cookie-dull/20 border-cookie-brown hover:bg-cookie-white hover:border-cookie-hazel bg-cookie-white focus:border-cookie-hazel focus:bg-cookie-white focus:outline-none.'
                                 value={user.Password} onChange={handleChange} name='Password'/>
                             </div>
-                            
-                            <Link to="/signup">New user? Click here to create a new account</Link>
+                            <div className='mt-4 mb-5'>
+                                <label className='block pl-1 text-xl'>Confirm Password</label>
+                                <input type='password' className='px-4 py-3 mt-2 w-full rounded-sm border-2 bg-cookie-dull/20 border-cookie-brown hover:bg-cookie-white hover:border-cookie-hazel bg-cookie-white focus:border-cookie-hazel focus:bg-cookie-white focus:outline-none.'
+                                value={user.Password} onChange={handleChange} name='Password'/>
+                            </div>
 
+                            <Link to="/login">Already have an account? Login</Link>
+                            
                             <div className='pt-20'>
-                                <button type='button' className='text-white bg-cookie-brown font-medium rounded-md text-2xl w-full p-3 mt-5 text-cookie-dull'>Login</button>
+                                <button type='button' className='text-white bg-cookie-brown font-medium rounded-md text-2xl w-full p-3 mt-5 text-cookie-dull'>Create new user</button>
                             </div>
                         </div>
-                        
                     </div>
-
-                    
                     
                 </div>
                 <div className='flex items-center justify-center h-[95%] hidden bg-cookie-dull/20 w-1/2 lg:block xl:w-2/3 m-10 rounded-3xl p-20 bg-blob bg-cover overflow-hidden relative'>
@@ -86,10 +66,11 @@ function Login() {
                         <img src={Cookie} className=" absolute -bottom-96 -right-96"></img>
                         {/* <img src={Monster} className="w-[65%] absolute -bottom-80 -left-46"></img> */}
                     </div>
+                    
                 </div>
             </div>
         </div>
     )
 }
 
-export default Login
+export default SignUp
