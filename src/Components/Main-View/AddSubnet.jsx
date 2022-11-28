@@ -52,14 +52,14 @@ function AddSubnet() {
                                 <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
                                     Name
                                 </label>
-                                <input type="text" className="appearance-none block w-full py-3 px-4 mb-3 rounded-sm border-2 bg-cookie-dull/20 border-cookie-hazel hover:bg-cookie-white focus:border-cookie-brown/50 focus:bg-cookie-white focus:outline-none"
+                                <input type="text" className="appearance-none block w-full md:h-10 py-3 px-4 mb-3 rounded-sm border-2 bg-cookie-dull/20 border-cookie-hazel hover:bg-cookie-white focus:border-cookie-brown/50 focus:bg-cookie-white focus:outline-none"
                             value={newSubnet.name} onChange={handleChange} name='name' />
                             </div>
                             <div className="w-full md:w-1/2 px-3">
                                 <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
                                     Subnet
                                 </label>
-                                <input type="text" className="appearance-none block w-full py-3 px-4 rounded-sm border-2 bg-cookie-dull/20 border-cookie-hazel hover:bg-cookie-white focus:border-cookie-brown/50 focus:bg-cookie-white focus:outline-none"
+                                <input type="text" className="appearance-none block w-full md:h-10 py-3 px-4 rounded-sm border-2 bg-cookie-dull/20 border-cookie-hazel hover:bg-cookie-white focus:border-cookie-brown/50 focus:bg-cookie-white focus:outline-none"
                             value={newSubnet.name} onChange={handleChange} name='subnet'/>
                             </div>
                         </div>
@@ -68,14 +68,14 @@ function AddSubnet() {
                                 <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
                                     VLAN
                                 </label>
-                                <input type="text" className="appearance-none block w-full py-3 px-4 mb-3 rounded-sm border-2 bg-cookie-dull/20 border-cookie-hazel hover:bg-cookie-white focus:border-cookie-brown/50 focus:bg-cookie-white focus:outline-none"
+                                <input type="text" className="appearance-none block w-full md:h-10 py-3 px-4 mb-3 rounded-sm border-2 bg-cookie-dull/20 border-cookie-hazel hover:bg-cookie-white focus:border-cookie-brown/50 focus:bg-cookie-white focus:outline-none"
                                 value={newSubnet.name} onChange={handleChange} name='vlan'/>
                             </div>
                             <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                                 <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
                                     Gateway
                                 </label>
-                                <input type="text" className="appearance-none block w-full py-3 px-4 rounded-sm border-2 bg-cookie-dull/20 border-cookie-hazel hover:bg-cookie-white focus:border-cookie-brown/50 focus:bg-cookie-white focus:outline-none"
+                                <input type="text" className="appearance-none block w-full md:h-10 py-3 px-4 rounded-sm border-2 bg-cookie-dull/20 border-cookie-hazel hover:bg-cookie-white focus:border-cookie-brown/50 focus:bg-cookie-white focus:outline-none"
                             value={newSubnet.name} onChange={handleChange} name='gateway'/>
                             </div>
                         </div>
@@ -84,14 +84,14 @@ function AddSubnet() {
                                 <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
                                     Status?
                                 </label>
-                                <input className="appearance-none block w-full py-3 px-4 rounded-sm border-2 bg-cookie-dull/20 border-cookie-hazel hover:bg-cookie-white focus:border-cookie-brown/50 focus:bg-cookie-white focus:outline-none"
+                                <input className="appearance-none block w-full md:h-10 py-3 px-4 rounded-sm border-2 bg-cookie-dull/20 border-cookie-hazel hover:bg-cookie-white focus:border-cookie-brown/50 focus:bg-cookie-white focus:outline-none"
                             value={newSubnet.name} onChange={handleChange} name='status' type="text"/>
                             </div>
                             <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                             <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-zip">
                                 Fields
                             </label>
-                            <input className="appearance-none block w-full py-3 px-4 rounded-sm border-2 bg-cookie-dull/20 border-cookie-hazel hover:bg-cookie-white focus:border-cookie-brown/50 focus:bg-cookie-white focus:outline-none"
+                            <input className="appearance-none block w-full md:h-10 py-3 px-4 rounded-sm border-2 bg-cookie-dull/20 border-cookie-hazel hover:bg-cookie-white focus:border-cookie-brown/50 focus:bg-cookie-white focus:outline-none"
                             value={newSubnet.name} onChange={handleChange} name='fields' type="text"/>
                             </div>
                         </div>
@@ -100,14 +100,14 @@ function AddSubnet() {
                                 <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
                                     VRF
                                 </label>
-                                <input className="appearance-none block w-full py-3 px-4 rounded-sm border-2 bg-cookie-dull/20 border-cookie-hazel hover:bg-cookie-white focus:border-cookie-brown/50 focus:bg-cookie-white focus:outline-none"
+                                <input className="appearance-none block w-full md:h-10 py-3 px-4 rounded-sm border-2 bg-cookie-dull/20 border-cookie-hazel hover:bg-cookie-white focus:border-cookie-brown/50 focus:bg-cookie-white focus:outline-none"
                             value={newSubnet.name} onChange={handleChange} name='gateway' type="vrf"/>
                             </div>
                                 <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                                 <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-zip">
                                     Location
                                 </label>
-                                <input className="appearance-none block w-full py-3 px-4 rounded-sm border-2 bg-cookie-dull/20 border-cookie-hazel hover:bg-cookie-white focus:border-cookie-brown/50 focus:bg-cookie-white focus:outline-none"
+                                <input className="appearance-none block w-full md:h-10 py-3 px-4 rounded-sm border-2 bg-cookie-dull/20 border-cookie-hazel hover:bg-cookie-white focus:border-cookie-brown/50 focus:bg-cookie-white focus:outline-none"
                             value={newSubnet.name} onChange={handleChange} name='location' type="text"/>
                             </div>
                         </div>

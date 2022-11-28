@@ -16,7 +16,7 @@ function Display() {
                     <NavWindow setCol = {setCol} setActiveAdd = {setActiveAdd}/>
                 </div>
                 <div className="w-[1px] h-screen bg-cookie-brown"></div>
-                <div className='flex flex-col items-center h-screen w-full'>
+                <div className='flex flex-col items-center w-full'>
                     {
                     add !== true 
                     ?
