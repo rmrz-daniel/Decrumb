@@ -16,7 +16,7 @@ function Display() {
                     <NavWindow setCol = {setCol} setActiveAdd = {setActiveAdd}/>
                 </div>
                 <div className="w-[1px] h-screen bg-cookie-brown"></div>
-                <div className='flex flex-col items-center w-full'>
+                <div className='flex flex-col items-center w-full overflow-hidden'>
                     {
                     add !== true 
                     ?
@@ -24,7 +24,7 @@ function Display() {
                         ? <DisplaySubnet col={col}/>
                         : <DisplayColl col={col} setCol = {setCol}/>
                     :
-                        <AddSubnet/>
+                        <AddSubnet setActiveAdd = {setActiveAdd}/>
                     }
 
                     

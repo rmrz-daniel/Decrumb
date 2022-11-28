@@ -27,7 +27,7 @@ function DisplaySubnet({col}) {
     return (
         <>
             <div className="flex flex-row w-full bg-cookie-brown text-cookie-white h-10 items-center">
-                <p className="px-5 select-none">{col}</p>
+                <p className="p-4 select-none">{col}</p>
             </div>
             <div className="flex flex-row w-11/12 justify-start">
                 <div className="px-4 py-3 my-5 w-20 rounded-l-md bg-cookie-brown/20 flex items-center">

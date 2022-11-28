@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react";
 import { db } from '../../db';
 
-function AddSubnet() {
+function AddSubnet({ setActiveAdd }) {
 
     const [newSubnet, setNewSubnet] = useState({
         collection: '',
@@ -42,7 +42,7 @@ function AddSubnet() {
     return (
         <>
             <div className="flex flex-row w-full bg-cookie-brown text-cookie-white h-10 items-center ">
-                <p className="px-5">Add Subnet</p>
+                <p className="p-5">Add Subnet</p>
                 </div>
                 <div className='p-5'/>
                 <div className="h-full w-[90%] border rounded-t-lg border-cookie-brown py-10">
@@ -112,7 +112,8 @@ function AddSubnet() {
                             </div>
                         </div>
                         <div className="flex flex-wrap mt-4 w-full justify-center">
-                            <button type='button' className='text-white bg-cookie-dull/20 font-normal rounded-md text-sm w-[20%] p-3 mt-6 mr-6 text-cookie-brown hover:bg-cookie-hazel hover:border-cookie-brown'>Cancel</button>
+                            <button type='button' className='text-white bg-cookie-dull/20 font-normal rounded-md text-sm w-[20%] p-3 mt-6 mr-6 text-cookie-brown hover:bg-cookie-hazel hover:border-cookie-brown' 
+                            onClick={() => {setActiveAdd(false)}}>Cancel</button>
                             <button type='button' className='bg-cookie-brown font-normal rounded-md text-sm w-[20%] p-3 mt-6 text-cookie-white hover:bg-cookie-hazel'>Save Subnet</button>
                         </div>
                     </form>
