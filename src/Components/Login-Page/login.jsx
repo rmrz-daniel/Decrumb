@@ -4,8 +4,8 @@ import React, { useState} from "react";
 import { db } from "../../db";
 import Cookie from './Cookie.png';
 import Monster from './Cookie_Monster.webp';
-import { characterPass } from "./secureLogin";
-
+//import { characterPass } from "./secureLogin"; -debug?
+//import { passwordSecure } from "./secureLogin"; -debug?
 
 const initialState = {
     Username: '',
@@ -29,31 +29,65 @@ function Login() {
         });
     };
 
+
+    function characterPass(user) {
+
+        //Check character string - debug
+        // if(user.username.search(/{|}|%|,|:|+|'|"|.|/g) != -1 || user.password.search(/{|}|%|,|:|+|'|"|.|/g) != -1) {
+        //     return false;
+        // }
+    
+        return true;
+    }
+
+
+    function passwordSecure(user) {
+
+        //Salting & Hash
+        const encryption = {
+            salt: Math.floor(100000 + Math.random() * 900000).toString(),
+            encryptedPassword: CryptoJS.AES.encrypt(user.password, salt)
+        }
+    
+        return encryption;
+    }
+
+
+
     async function handleSignup() {
 
-        //Security against JSON attack
-        try {
+        //Security against JSON attack & Checking new usernames at Signup - debug
+        // try {
             
-            const userQuery = await db.useraccount.where("username").equalsIgnoreCase(user.Username).first();
-            if(userQuery === null || userQuery === undefined || characterPass(userQuery)) { 
-            
-                alert('Try another username')
-                throw "exit";
-            }
-        } catch (e) {
-        }
-        
-        //Salting to implement with Hashing
-        const salt = Math.floor(100000 + Math.random() * 900000);
+        //     if(characterPass(user)) { 
+                
+        //         alert('Try a different input.')
+        //         console.log('Invalid login attempt: Malicious Input, '+ user.Username+', '+ user.Password)
+        //         throw "exit";
+        //     } 
+
+        //     const userQuery = await db.useraccount.where("username").equalsIgnoreCase(user.Username).first();
+        //     if(userQuery !== null || userQuery !== undefined) {
+
+        //         alert('That username already exists.')
+        //         throw "exit";
+        //     }
+        // } catch (e) {
+        // }
+
+
+        //Persist the account with Encrypted Password
+        const encryption = passwordSecure(user);
         await db.useraccount.add({
             username: user.Username,
-            password: user.Password + salt,
-            salt: salt.toString()
-            });
+            password: encryption.encryptedPassword,
+            salt: encryption.salt
+        });
+
+
         setUser(initialState);
         setSuccess(success => !success);
         setActive(signup => !signup);
-
     }
 
 
@@ -61,61 +95,43 @@ function Login() {
     async function checkLogin() {
 
         alert('hello')
-        alert(user.Username)
-
-       // user.Username.replace(/\s/g, function (x) {return alert("Alert!")});
-
-        const userQuery = await db.useraccount.where("username").equalsIgnoreCase(user.Username).first();
-
-
-        alert('bye')
-
-
-
-        // useLiveQuery(
-
-        //     async () => {
-                
-        //         const userQuery = await db.user
-        //             .where({
-        //                 username: user.Username,
-        //                 password: user.Password
-        //             }).first()
-        //     }
-        // )
-
+        //Security against JSON attack at Login - debug
         // try {
-        //     await db.friends.add({name: "Josephine", age: 21});
-        //     const youngFriends = await db.friends.where("age").below(25).toArray();
-        //     alert (`My young friends: ${JSON.stringify(youngFriends)}`);
-        //   } catch (e) {
-        //     alert (`Error: ${e}`);
-        //   }
+    
+        //     if(characterPass(user) != true) { 
+                
+        //         alert('Try a different input.')
+        //         console.log('Invalid login attempt: Malicious Input, '+ user.Username+', '+ user.Password)
+        //         throw "exit";
+        //     } 
+        // } catch (e) {
+        // }
+        
+
+        /*Login Validation*/
+        try {
+           
+            const userQuery = await db.useraccount.where("username").equalsIgnoreCase(user.Username).first();
+            const decryptedPassword = CryptoJS.AES.decrypt(userQuery.password, userQuery.salt);
+            if(userQuery === null || userQuery === undefined) {
+
+                alert('That username does not exist.')
+                console.log('Invalid login attempt: Incorrect Username')
+                throw "exit";
+            } else if (userQuery.password !== decryptedPassword) {
+
+                alert('The password is incorrect.')
+                console.log('Invalid login attempt: Incorrect Password')
+                throw "exit";
+            }
+        } catch (error) {
+        }
+
+        alert('Successful Login')
+        //Must route to subnet page now
         
     }
 
-
-    // function login(){
-    //     if(user.Username.replace(/\s/g, '') === ""){
-    //         return (
-    //             alert("Alert!")
-    //         );
-    //     }else{
-    //         axios.get(`http://localhost:4444/api/get-user/${user.Username}`).then(
-    //             function({data}){
-    //                 if(data.Password === user.Password){
-    //                     console.log("Match")
-    //                 } else {
-    //                     console.log("NO MATCH")
-    //                 }
-    //             }
-    //         ).catch(
-    //             function(error){
-    //                 console.log(error)
-    //             }
-    //         )
-    //     }
-    // }
 
     return (
         

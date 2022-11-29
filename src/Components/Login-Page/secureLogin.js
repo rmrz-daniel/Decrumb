@@ -1,24 +1,26 @@
+///I have problems importing these functions into the component login.jsx - review
+
+
 /* Prevent JSON attacks */
-export function characterPass(userQuery) {
+export function characterPass(user) {
 
-    const [username, setUserName] = useState(userQuery.username);
-    const [password, setPassword] = useState(userQuery.password);
-    const [salt, setSalt] = useState(userQuery.salt);
-    //Variables//
-
-
+    if(user.username.search(/{|}|%|,|:|+|'|"|.|/i) != -1 || user.password.search(/{|}|%|,|:|+|'|"|.|/i) != -1) {
+        return false;
+    }
     //Check character string//
 
-
-    //Validate password//
-
-
-    return false;
+    return true;
 }
 
 
 /* Salt and Hash password */
-export function passwordSecure() {
+export function passwordSecure(user) {
 
-    
+    //Salting & Hash
+    const encryption = {
+        salt: Math.floor(100000 + Math.random() * 900000).toString(),
+        encryptedPassword: CryptoJS.AES.encrypt(user.password, salt)
+    }
+
+    return encryption;
 }
