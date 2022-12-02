@@ -5,13 +5,15 @@ import { db } from "../../db";
 
 const initialState = {
     Username: '',
-    Password: ''
+    Password: '',
+    ConfirmPassword: ''
   };
 
 function Login() {
 
     const [signup, setActive] = useState(false);
     const [success, setSuccess] = useState(false);
+    const [failed, setFailed] = useState(false);
     
     const [user, setUser] = useState(initialState);
 
@@ -25,14 +27,20 @@ function Login() {
 
     async function handleSignup() {
         const salt = Math.floor(100000 + Math.random() * 900000);
-        await db.user.add({
-            username: user.Username,
-            password: user.Password + salt,
-            salt: salt.toString()
-            });
-        setUser(initialState);
-        setSuccess(success => !success);
-        setActive(signup => !signup);
+
+        if(user.Password === user.ConfirmPassword){  
+            await db.user.add({
+                username: user.Username,
+                password: user.Password + salt,
+                salt: salt.toString()
+                });
+            setUser(initialState);
+            setSuccess(success => !success);
+            setActive(signup => !signup);
+        } else {
+            setFailed(failed => !failed);
+        }
+
 
     }
 
@@ -41,7 +49,12 @@ function Login() {
         <div className='bg-cookie-white'>
             {
             success && <div class="absolute top-0 w-full z-10 bg-green-100 rounded-lg py-5 px-6 text-green-700 text-center">
-            Signup was successfull <span className="absolute left-[98%] select-none cursor-pointer text-green-800" onClick={() => {setSuccess(success => !success)}}>X</span>
+                Signup was successfull <span className="absolute left-[98%] select-none cursor-pointer text-green-800" onClick={() => {setSuccess(success => !success)}}>X</span>
+            </div>
+            }
+            {
+            failed && <div class="absolute top-0 w-full z-10 bg-red-100 rounded-lg py-5 px-6 text-red-700 text-center">
+                Something went wrong!<span className="absolute left-[98%] select-none cursor-pointer text-red-800" onClick={() => {setFailed(failed => !failed)}}>X</span>
             </div>
             }
 
@@ -52,7 +65,7 @@ function Login() {
                     ?
                     // If the signup is true then this is displayed
                     <div className='w-4/5 h-100'>
-                        <div className='font-bold text-4xl text-black '>Sign Up to your
+                        <div className='font-bold text-3xl text-black '>Sign Up to your
                             <div className='inline-block pl-4 text-cookie-hazel text-left'>
                                 <h1>Cookie</h1>
                                 <h1>Decrumbler</h1>
@@ -71,6 +84,11 @@ function Login() {
                                 <input type='password' className='px-4 py-3 mt-2 w-full rounded-sm border-2 bg-cookie-dull/20 border-cookie-brown hover:bg-cookie-white hover:border-cookie-hazel bg-cookie-white focus:border-cookie-hazel focus:bg-cookie-white focus:outline-none.'
                                 value={user.Password} onChange={handleChange} name='Password'/>
                             </div>
+                            <div className='mt-4'>
+                                <label className='block pl-1 text-xl'>Confirm Password</label>
+                                <input type='password' className='px-4 py-3 mt-2 w-full rounded-sm border-2 bg-cookie-dull/20 border-cookie-brown hover:bg-cookie-white hover:border-cookie-hazel bg-cookie-white focus:border-cookie-hazel focus:bg-cookie-white focus:outline-none.'
+                                value={user.ConfirmPassword} onChange={handleChange} name='ConfirmPassword'/>
+                            </div>
                             <div className="pt-3"/>
                             <h1 className="font-semibold text-lg text-right">Returning user? <span className="text-cookie-hazel select-none cursor-pointer hover:text-cookie-hazel/70"
                             onClick={() => {setActive(signup => !signup)}}>Login.</span></h1>
@@ -83,8 +101,8 @@ function Login() {
                     :
                     // this will display by default as signup is defaulted to false
                     <div className='w-4/5 h-100'>
-                        <div className='font-bold text-4xl text-black '>Welcome to your
-                            <div className='inline-block pl-4 text-cookie-hazel text-left'>
+                        <div className='font-bold text-3xl text-black '>Welcome to your
+                            <div className='inline-block pl-4 text-2xl text-cookie-hazel text-left'>
                                 <h1>Cookie</h1>
                                 <h1>Decrumbler</h1>
                             </div>
