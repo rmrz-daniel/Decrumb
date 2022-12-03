@@ -6,12 +6,14 @@ import Cookie from './Cookie.png';
 import Monster from './Cookie_Monster.webp';
 //import { characterPass } from "./secureLogin"; -debug?
 //import { passwordSecure } from "./secureLogin"; -debug?
+import AES from 'crypto-js/aes';
 
 const initialState = {
     Username: '',
     Password: ''
   };
 
+const sanitizationSearch = /^[a-z.0-9]/i;
 
 
 function Login() {
@@ -30,24 +32,24 @@ function Login() {
     };
 
 
-    function characterPass(user) {
+    function characterPass() {
 
         //Check character string - debug
-        // if(user.username.search(/{|}|%|,|:|+|'|"|.|/g) != -1 || user.password.search(/{|}|%|,|:|+|'|"|.|/g) != -1) {
-        //     return false;
+        // const pass = true;
+        // if(user.username.search(sanitizationSearch) != -1 || user.password.search(sanitizationSearch) != -1) {
+        //     pass = false;
         // }
     
-        return true;
+        // return pass;
     }
 
 
-    function passwordSecure(user) {
+    function passwordSecure() {
 
         //Salting & Hash
-        const encryption = {
-            salt: Math.floor(100000 + Math.random() * 900000).toString(),
-            encryptedPassword: CryptoJS.AES.encrypt(user.password, salt)
-        }
+        const salt = Math.floor(100000 + Math.random() * 900000).toString();
+        const encryption = CryptoJS.AES.encrypt(user.Password, salt);
+        alert('hello')
     
         return encryption;
     }
@@ -57,32 +59,34 @@ function Login() {
     async function handleSignup() {
 
         //Security against JSON attack & Checking new usernames at Signup - debug
-        // try {
+        try {
             
-        //     if(characterPass(user)) { 
+            if(user.username.search(sanitizationSearch) != -1 || user.password.search(sanitizationSearch) != -1) { 
                 
-        //         alert('Try a different input.')
-        //         console.log('Invalid login attempt: Malicious Input, '+ user.Username+', '+ user.Password)
-        //         throw "exit";
-        //     } 
+                alert('Try a different input.');
+                //console.log('Invalid login attempt: Malicious Input, '+ user.Username+', '+ user.Password)
+                throw "exit";
+            } 
 
-        //     const userQuery = await db.useraccount.where("username").equalsIgnoreCase(user.Username).first();
-        //     if(userQuery !== null || userQuery !== undefined) {
+            const userQuery = await db.useraccount.where("username").equalsIgnoreCase(user.Username).first();
+            if(userQuery !== null || userQuery !== undefined) {
 
-        //         alert('That username already exists.')
-        //         throw "exit";
-        //     }
-        // } catch (e) {
-        // }
+                alert('That username already exists.');
+                throw "exit";
+            }
+        } catch (e) {
+        }
 
 
         //Persist the account with Encrypted Password
-        const encryption = passwordSecure(user);
+        const encryption = passwordSecure();
+        alert('hi');
         await db.useraccount.add({
             username: user.Username,
-            password: encryption.encryptedPassword,
-            salt: encryption.salt
+            password: encryption.key.toString(),
+            salt: encryption.salt.toString()
         });
+        alert('bye');
 
 
         setUser(initialState);
@@ -98,7 +102,7 @@ function Login() {
         //Security against JSON attack at Login - debug
         // try {
     
-        //     if(characterPass(user) != true) { 
+        //     if(characterPass() != true) { 
                 
         //         alert('Try a different input.')
         //         console.log('Invalid login attempt: Malicious Input, '+ user.Username+', '+ user.Password)
