@@ -4,9 +4,7 @@ import React, { useState} from "react";
 import { db } from "../../db";
 import Cookie from './Cookie.png';
 import Monster from './Cookie_Monster.webp';
-//import { characterPass } from "./secureLogin"; -debug?
-//import { passwordSecure } from "./secureLogin"; -debug?
-import AES from 'crypto-js/aes';
+
 
 const initialState = {
     Username: '',
@@ -14,10 +12,10 @@ const initialState = {
     ConfirmPassword: ''
   };
 
-const sanitizationSearch = /^[a-z.0-9]/i;
+const sanitizationSearch = /[\W\s]/i;
 
 
-function Login() {
+function Login({setLoginStatus}) {
 
     const [signup, setActive] = useState(true);
     const [success, setSuccess] = useState(false);
@@ -34,126 +32,112 @@ function Login() {
     };
 
 
-    function characterPass() {
+    //debug
+    // function passwordSecure() {
 
-        //Check character string - debug
-        // const pass = true;
-        // if(user.username.search(sanitizationSearch) != -1 || user.password.search(sanitizationSearch) != -1) {
-        //     pass = false;
-        // }
+    //     //Salting & Hash
+    //     const salt = Math.floor(100000 + Math.random() * 900000).toString();
+    //     const encryption = CryptoJS.AES.encrypt(user.Password, salt);
+    //     alert('hello')
     
-        // return pass;
-    }
-
-
-    function passwordSecure() {
-
-        //Salting & Hash
-        const salt = Math.floor(100000 + Math.random() * 900000).toString();
-        const encryption = CryptoJS.AES.encrypt(user.Password, salt);
-        alert('hello')
-    
-        return encryption;
-    }
-
+    //     return encryption;
+    // }
 
 
     async function handleSignup() {
 
-
-        //Security against JSON attack & Checking new usernames at Signup - debug
         try {
             
-            if(user.username.search(sanitizationSearch) != -1 || user.password.search(sanitizationSearch) != -1) { 
+            //Security against JSON attack & Checking new usernames at Signup
+            if(user.Username.search(sanitizationSearch) != -1 || user.Password.search(sanitizationSearch) != -1 || user.ConfirmPassword.search(sanitizationSearch) != -1 ) { 
                 
                 alert('Try a different input.');
-                //console.log('Invalid login attempt: Malicious Input, '+ user.Username+', '+ user.Password)
                 throw "exit";
             } 
 
-            const userQuery = await db.useraccount.where("username").equalsIgnoreCase(user.Username).first();
-            if(userQuery !== null || userQuery !== undefined) {
+            //debug
+            //Checking for uniqueness of username
+            // const userQuery = await db.useraccount.where("username").equalsIgnoreCase(user.Username).first();
+            // if(userQuery !== null || userQuery !== undefined) {
 
-                alert('That username already exists.');
-                throw "exit";
+            //     alert('That username already exists.');
+            //     throw "exit";
+            // }
+
+
+            //Persist the new account
+            const salt = Math.floor(100000 + Math.random() * 900000);
+            if(user.Password === user.ConfirmPassword){  
+                await db.useraccount.add({
+                    username: user.Username,
+                    password: user.Password + salt,
+                    salt: salt.toString()
+                    });
+                setUser(initialState);
+                setSuccess(success => !success);
+                setActive(signup => !signup);
+            } else {
+                setFailed(failed => !failed);
             }
-        } catch (e) {
-        }
+
+            } catch (e) {
+            }
 
 
+        //debug
         //Persist the account with Encrypted Password
-        const encryption = passwordSecure();
-        alert('hi');
-        await db.useraccount.add({
-            username: user.Username,
-            password: encryption.key.toString(),
-            salt: encryption.salt.toString()
-        });
-        alert('bye');
-
-
-        setUser(initialState);
-        setSuccess(success => !success);
-        setActive(signup => !signup);
+        // const encryption = passwordSecure();
+        // await db.useraccount.add({
+        //     username: user.Username,
+        //     password: encryption.key.toString(),
+        //     salt: encryption.salt.toString()
+        // });
     }
 
 
 
     async function checkLogin() {
 
-        alert('hello')
-        //Security against JSON attack at Login - debug
-        // try {
-    
-        //     if(characterPass() != true) { 
-                
-        //         alert('Try a different input.')
-        //         console.log('Invalid login attempt: Malicious Input, '+ user.Username+', '+ user.Password)
-        //         throw "exit";
-        //     } 
-        // } catch (e) {
-        // }
-        
-
-        /*Login Validation*/
         try {
-           
+            
+            //Security against JSON attack at Login
+            if(user.Username.search(sanitizationSearch) != -1 || user.Password.search(sanitizationSearch) != -1) { 
+                
+                alert('Try a different input.')
+                throw "exit";
+            } 
+
+            //Login Validation
             const userQuery = await db.useraccount.where("username").equalsIgnoreCase(user.Username).first();
-            const decryptedPassword = CryptoJS.AES.decrypt(userQuery.password, userQuery.salt);
-            if(userQuery === null || userQuery === undefined) {
+            const passwordCheck = userQuery.password.substr(0, userQuery.password.length -userQuery.salt.length)
+            if(user.Username === userQuery.username && user.Password === passwordCheck) {
 
-                alert('That username does not exist.')
-                console.log('Invalid login attempt: Incorrect Username')
-                throw "exit";
-            } else if (userQuery.password !== decryptedPassword) {
-
-                alert('The password is incorrect.')
-                console.log('Invalid login attempt: Incorrect Password')
-                throw "exit";
+                //Ramirez here
+                setLoginStatus(true);
             }
-        } catch (error) {
+
+        } catch (e) {
         }
 
 
-        //Reference
-        const salt = Math.floor(100000 + Math.random() * 900000);
+        //debug
+        // try {
+           
+        //     const userQuery = await db.useraccount.where("username").equalsIgnoreCase(user.Username).first();
+        //     const decryptedPassword = CryptoJS.AES.decrypt(userQuery.password, userQuery.salt);
+        //     if(userQuery === null || userQuery === undefined) {
 
-        if(user.Password === user.ConfirmPassword){  
-            await db.user.add({
-                username: user.Username,
-                password: user.Password + salt,
-                salt: salt.toString()
-                });
-            setUser(initialState);
-            setSuccess(success => !success);
-            setActive(signup => !signup);
-        } else {
-            setFailed(failed => !failed);
-        }
+        //         alert('That username does not exist.')
+        //         console.log('Invalid login attempt: Incorrect Username')
+        //         throw "exit";
+        //     } else if (userQuery.password !== decryptedPassword) {
 
-
-        alert('Successful Login')
-        //Must route to subnet page now
+        //         alert('The password is incorrect.')
+        //         console.log('Invalid login attempt: Incorrect Password')
+        //         throw "exit";
+        //     }
+        // } catch (error) {
+        // }
         
     }
 
