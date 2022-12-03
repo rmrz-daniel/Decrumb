@@ -6,7 +6,7 @@ import NavWindow from './Components/Side-View/NavWindow'
 
 function App() {
 
-  const [loggedIn, setLoginStatus] = useState(true);
+  const [loggedIn, setLoginStatus] = useState(false);
 
   return (
     <div className="App">
