@@ -17,11 +17,32 @@ function AddSubnet({ setActiveAdd }) {
         const { value } = e.target;
         setNewSubnet({
             ...newSubnet,
-            [e.target.name]: value
+            [e.target.name]: value,
+            [e.target.collection]: value,
+            [e.target.subnet]: value,
+            [e.target.vlan]: value,
+            [e.target.gw]: value,
+            [e.target.location]: value,
+            [e.target.state]: value,
         });
     }
 
+    async function updateSubnets(){
+        try {
+            await db.subnet.add({
+                name,
+                collection,
+                subnet,
+                vlan,
+                gw,
+                location,
+                state
+            });
+            
+        }catch (error){
 
+        }
+    }
 
     // async function addFriend() {
     //     try {
@@ -57,7 +78,7 @@ function AddSubnet({ setActiveAdd }) {
                                 Subnet
                             </label>
                             <input type="text" className="appearance-none block w-full md:h-10 py-3 px-4 rounded-sm border-2 bg-cookie-dull/20 border-cookie-hazel hover:bg-cookie-white focus:border-cookie-brown/50 focus:bg-cookie-white focus:outline-none"
-                        value={newSubnet.name} onChange={handleChange} name='subnet'/>
+                        value={newSubnet.subnet} onChange={handleChange} name='subnet'/>
                         </div>
                     </div>
                     <div className="flex flex-wrap -mx-3 mb-6">
@@ -66,14 +87,14 @@ function AddSubnet({ setActiveAdd }) {
                                 VLAN
                             </label>
                             <input type="text" className="appearance-none block w-full md:h-10 py-3 px-4 mb-3 rounded-sm border-2 bg-cookie-dull/20 border-cookie-hazel hover:bg-cookie-white focus:border-cookie-brown/50 focus:bg-cookie-white focus:outline-none"
-                            value={newSubnet.name} onChange={handleChange} name='vlan'/>
+                            value={newSubnet.vlan} onChange={handleChange} name='vlan'/>
                         </div>
                         <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                             <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
                                 Gateway
                             </label>
                             <input type="text" className="appearance-none block w-full md:h-10 py-3 px-4 rounded-sm border-2 bg-cookie-dull/20 border-cookie-hazel hover:bg-cookie-white focus:border-cookie-brown/50 focus:bg-cookie-white focus:outline-none"
-                        value={newSubnet.name} onChange={handleChange} name='gateway'/>
+                        value={newSubnet.gw} onChange={handleChange} name='gw'/>
                         </div>
                     </div>
                     <div className="flex flex-wrap -mx-3 mb-6">
@@ -82,14 +103,14 @@ function AddSubnet({ setActiveAdd }) {
                                 Status?
                             </label>
                             <input className="appearance-none block w-full md:h-10 py-3 px-4 rounded-sm border-2 bg-cookie-dull/20 border-cookie-hazel hover:bg-cookie-white focus:border-cookie-brown/50 focus:bg-cookie-white focus:outline-none"
-                        value={newSubnet.name} onChange={handleChange} name='status' type="text"/>
+                        value={newSubnet.state} onChange={handleChange} name='state' type="text"/>
                         </div>
                         <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                         <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-zip">
                             Fields
                         </label>
                         <input className="appearance-none block w-full md:h-10 py-3 px-4 rounded-sm border-2 bg-cookie-dull/20 border-cookie-hazel hover:bg-cookie-white focus:border-cookie-brown/50 focus:bg-cookie-white focus:outline-none"
-                        value={newSubnet.name} onChange={handleChange} name='fields' type="text"/>
+                        value={newSubnet.collection} onChange={handleChange} name='collection' type="text"/>
                         </div>
                     </div>
                     <div className="flex flex-wrap -mx-3 mb-6">
@@ -98,14 +119,14 @@ function AddSubnet({ setActiveAdd }) {
                                 VRF
                             </label>
                             <input className="appearance-none block w-full md:h-10 py-3 px-4 rounded-sm border-2 bg-cookie-dull/20 border-cookie-hazel hover:bg-cookie-white focus:border-cookie-brown/50 focus:bg-cookie-white focus:outline-none"
-                        value={newSubnet.name} onChange={handleChange} name='gateway' type="vrf"/>
+                        value={newSubnet.vrf} onChange={handleChange} name='vrf' type="text"/>
                         </div>
                             <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                             <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-zip">
                                 Location
                             </label>
                             <input className="appearance-none block w-full md:h-10 py-3 px-4 rounded-sm border-2 bg-cookie-dull/20 border-cookie-hazel hover:bg-cookie-white focus:border-cookie-brown/50 focus:bg-cookie-white focus:outline-none"
-                        value={newSubnet.name} onChange={handleChange} name='location' type="text"/>
+                        value={newSubnet.location} onChange={handleChange} name='location' type="text"/>
                         </div>
                     </div>
                     <div className="flex flex-wrap mt-4 w-full justify-center">
