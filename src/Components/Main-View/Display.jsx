@@ -4,7 +4,7 @@ import DisplaySubnet from "./DisplaySubnet";
 import DisplayColl from "./DisplayColl";
 import AddSubnet from "./AddSubnet";
 
-function Display() {
+function Display({setLoginStatus}) {
 
     const [col, setCol] = useState();
     const [add, setActiveAdd] = useState(false);
@@ -26,7 +26,7 @@ function Display() {
         <div className='bg-cookie-white'>
             <div className='flex flex-row h-screen '>
                 <div className='flex lg:w-[20%] md:w-[25%]'>
-                    <NavWindow setCol = {setCol} setActiveAdd = {setActiveAdd}/>
+                    <NavWindow setCol = {setCol} setActiveAdd = {setActiveAdd} setLoginStatus = {setLoginStatus}/>
                 </div>
                 <div className="w-[1px] h-screen bg-cookie-brown"></div>
 

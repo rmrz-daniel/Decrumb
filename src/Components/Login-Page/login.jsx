@@ -17,7 +17,7 @@ const initialState = {
 const sanitizationSearch = /^[a-z.0-9]/i;
 
 
-function Login() {
+function Login({setLoginStatus}) {
 
     const [signup, setActive] = useState(true);
     const [success, setSuccess] = useState(false);

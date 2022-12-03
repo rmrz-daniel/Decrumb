@@ -6,11 +6,15 @@ import NavWindow from './Components/Side-View/NavWindow'
 
 function App() {
 
+  const [loggedIn, setLoginStatus] = useState(true);
+
   return (
     <div className="App">
-      <Login/>
-      {/* <AddSubnet/> */}
-      {/* <Display/> */}
+      {
+        loggedIn
+        ? <Display setLoginStatus={setLoginStatus}/>
+        : <Login setLoginStatus={setLoginStatus}/>
+      }
     </div>
   )
 }

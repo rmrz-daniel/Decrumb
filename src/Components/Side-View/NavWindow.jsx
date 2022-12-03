@@ -2,7 +2,7 @@ import logo from './logo.png'
 import React, { useState, useEffect } from "react";
 import { db } from '../../db';
 import { useLiveQuery } from "dexie-react-hooks";
-function NavWindow({ setCol, setActiveAdd }) {
+function NavWindow({ setCol, setActiveAdd, setLoginStatus }) {
 
     const collections = useLiveQuery(() => db.subnet
         .orderBy('collection')
@@ -42,7 +42,7 @@ function NavWindow({ setCol, setActiveAdd }) {
                     <p className='group-hover:text-cookie-hazel text-cookie-brown'>Add Subnet</p>
                 </div>
                 <div className='p-3'/>
-                <button type='button' className='text-white bg-cookie-brown font-medium text-2xl w-full text-center text-cookie-dull h-10 hover:bg-cookie-hazel'>Logout</button>
+                <button type='button' className='text-white bg-cookie-brown font-medium text-2xl w-full text-center text-cookie-dull h-10 hover:bg-cookie-hazel' onClick={() => {setLoginStatus(false)} }>Logout</button>
             </div>
 
             
