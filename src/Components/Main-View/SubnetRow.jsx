@@ -41,7 +41,7 @@ function SubnetRow(props) {
     };
 
     async function ping(){
-        await fetch(`http://localhost:4567/${props.subnet.subnet}`)
+        await fetch(`https://steakovercooked.com/api/ping/?host=${props.subnet.subnet}`)
             .then(response => response.json())
             .then((data) => {
                 console.log(data)
