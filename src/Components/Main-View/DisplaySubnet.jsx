@@ -19,13 +19,6 @@ function DisplaySubnet({col}) {
     },[col, renderFlag])
 
     // console.log(subnet)
-    function ping(){
-        fetch('http://localhost:8080/priv-ping-api/2.8.2.8')
-            .then(response => response.json())
-            .then((data) => {
-                console.log(data)
-            })
-    }
 
     return (
         <>
