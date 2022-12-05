@@ -41,7 +41,7 @@ function SubnetRow(props) {
     };
 
     function ping(){
-        fetch(`http://localhost:8080/priv-ping-api/6f95caf8-a4b3-4be8-9b3e-1b567fd32bcf@${props.subnet.subnet}`)
+        fetch(`http://localhost:4567/${props.subnet.subnet}`)
             .then(response => response.json())
             .then((data) => {
                 console.log(data)
