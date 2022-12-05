@@ -40,8 +40,8 @@ function SubnetRow(props) {
     	props.setFlag(current => !current);
     };
 
-    function ping(){
-        fetch(`http://localhost:4567/${props.subnet.subnet}`)
+    async function ping(){
+        await fetch(`http://localhost:4567/${props.subnet.subnet}`)
             .then(response => response.json())
             .then((data) => {
                 console.log(data)
