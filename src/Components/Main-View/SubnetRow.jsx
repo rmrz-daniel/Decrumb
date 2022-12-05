@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { db } from "../../db";
+import classNames from "classnames";
 
 
 function SubnetRow(props) {
@@ -51,7 +52,11 @@ function SubnetRow(props) {
 				        <td>{props.subnet.vrf}</td>
 				        <td>{props.subnet.gw}</td>
 				        <td>{props.subnet.location}</td>
-				        <td>{props.subnet.state}</td>
+				        <td>
+				        	<div className="flex items-center justify-center">
+				        		<div className={classNames("rounded-full w-4 h-4", {"bg-orange-300":props.subnet.state == -1, "bg-red-300":props.subnet.state == 0, "bg-green-400":props.subnet.state==1} )}/>
+				        	</div>
+				        </td>
 				        <td>N/A</td>
 				        <td>
 				            <span className="group">
